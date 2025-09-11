@@ -6,16 +6,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
-
 import time
-import os
-import tempfile
-
-# Set up environment for Hugging Face Spaces
-os.environ['WDM_LOCAL'] = '1'
-os.environ['WDM_CACHE'] = '/tmp/.wdm'
 
 class ProductNameExtractor:
     def __init__(self, headless=True, driver_path=None):
@@ -91,106 +82,73 @@ class ProductNameExtractor:
             return None
     
     def setup_driver(self):
-        """Setup Chrome WebDriver with optimal settings for Hugging Face Spaces"""
+        """Setup Chrome WebDriver with optimal settings"""
         try:
             chrome_options = Options()
             
-            # Essential options for Hugging Face Spaces
-            chrome_options.add_argument('--headless=new')  # Use new headless mode
+            if self.headless:
+                chrome_options.add_argument('--headless')
+            
+            # Performance optimizations but keep some features for better compatibility
             chrome_options.add_argument('--no-sandbox')
             chrome_options.add_argument('--disable-dev-shm-usage')
             chrome_options.add_argument('--disable-gpu')
             chrome_options.add_argument('--disable-extensions')
             chrome_options.add_argument('--disable-logging')
             chrome_options.add_argument('--disable-blink-features=AutomationControlled')
-            chrome_options.add_argument('--remote-debugging-port=9222')
-            chrome_options.add_argument('--disable-web-security')
-            chrome_options.add_argument('--allow-running-insecure-content')
-            chrome_options.add_argument('--disable-features=VizDisplayCompositor')
-            chrome_options.add_argument('--single-process')  # Important for containers
-            chrome_options.add_argument('--no-zygote')
-            chrome_options.add_argument('--disable-background-timer-throttling')
-            chrome_options.add_argument('--disable-renderer-backgrounding')
-            chrome_options.add_argument('--disable-backgrounding-occluded-windows')
             
-            # Set user agent
-            chrome_options.add_argument(
-                '--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-            )
+            # Don't block images for better content detection
+            # chrome_options.add_argument('--disable-images')
             
+            # User agent to avoid detection
+            chrome_options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36')
+            
+            # Hide automation indicators
             chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
             chrome_options.add_experimental_option('useAutomationExtension', False)
             
-            # Create a temporary directory for cache
-            temp_dir = tempfile.mkdtemp()
-            os.environ['WDM_CACHE'] = temp_dir
+            if self.driver_path:
+                self.driver = webdriver.Chrome(executable_path=self.driver_path, options=chrome_options)
+            else:
+                # Assumes ChromeDriver is in PATH or using webdriver-manager
+                self.driver = webdriver.Chrome(options=chrome_options)
             
-            try:
-                # Method 1: Try with webdriver_manager (recommended)
-                self.driver = webdriver.Chrome(
-                    service=Service(ChromeDriverManager().install()),
-                    options=chrome_options
-                )
-                print("✅ Using webdriver_manager")
-                
-            except Exception as e1:
-                print(f"⚠️ webdriver_manager failed: {e1}")
-                try:
-                    # Method 2: Try system chromedriver
-                    self.driver = webdriver.Chrome(
-                        service=Service('/usr/bin/chromedriver'),
-                        options=chrome_options
-                    )
-                    print("✅ Using system chromedriver")
-                    
-                except Exception as e2:
-                    print(f"⚠️ System chromedriver failed: {e2}")
-                    try:
-                        # Method 3: Try without explicit service
-                        self.driver = webdriver.Chrome(options=chrome_options)
-                        print("✅ Using default Chrome setup")
-                        
-                    except Exception as e3:
-                        print(f"❌ All Chrome setup methods failed: {e3}")
-                        return False
-    
-            # Configure driver
+            # Remove automation indicators
             self.driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+            
             self.driver.set_page_load_timeout(30)
             self.driver.implicitly_wait(10)
-    
+            
             print("✅ Chrome WebDriver setup successful")
             return True
-    
+            
         except Exception as e:
             print(f"❌ Error setting up driver: {e}")
+            print("💡 Make sure ChromeDriver is installed and in PATH, or install using:")
+            print("   pip install webdriver-manager")
+            print("   Then add this import: from webdriver_manager.chrome import ChromeDriverManager")
             return False
     
     def close_driver(self):
         """Close the WebDriver"""
         if self.driver:
-            try:
-                self.driver.quit()
-            except Exception as e:
-                print(f"Warning: Error closing driver: {e}")
-            finally:
-                self.driver = None
+            self.driver.quit()
+            self.driver = None
     
     def extract_from_page_content(self, url):
         """Extract product name using Selenium web scraping"""
         try:
             if not self.driver and not self.setup_driver():
-                print("❌ Failed to setup driver, falling back to URL extraction")
-                return self.extract_from_url_path(url)
+                return None
             
             print(f"🌐 Loading page: {url}")
             self.driver.get(url)
             
             # Wait for page to load
-            WebDriverWait(self.driver, 15).until(
+            WebDriverWait(self.driver, 10).until(
                 lambda driver: driver.execute_script("return document.readyState") == "complete"
             )
-            time.sleep(2)  # Reduced wait time
+            time.sleep(3)  # Additional wait for dynamic content
             
             # Try to close any popups or cookie banners
             self.close_popups()
@@ -257,8 +215,7 @@ class ProductNameExtractor:
             
         except Exception as e:
             print(f"❌ Error scraping page content: {e}")
-            # Fallback to URL extraction if scraping fails
-            return self.extract_from_url_path(url)
+            return None
     
     def close_popups(self):
         """Try to close common popups and cookie banners"""
@@ -346,7 +303,7 @@ class ProductNameExtractor:
         generic_words = ['home', 'shop', 'store', 'buy', 'online', 'shopping', 'product']
         return any(word in title.lower() for word in generic_words) and len(title.split()) < 4
     
-    def extract_product_name(self, url, method='both'):
+    def extract_product_name(self, url, method='scrape'):
         """
         Main method to extract product name
         
@@ -362,7 +319,7 @@ class ProductNameExtractor:
             return self.extract_from_url_path(url)
         
         elif method == 'scrape':
-            # Only web scraping (with fallback to URL if it fails)
+            # Only web scraping (recommended for accurate results)
             return self.extract_from_page_content(url)
         
         elif method == 'both':
@@ -384,30 +341,6 @@ class ProductNameExtractor:
         """Context manager exit - ensures driver is closed"""
         self.close_driver()
 
-# Simple function for direct usage
-def get_product_name(url):
-    """
-    Simple function to get product name from URL
-    
-    Args:
-        url (str): Product URL
-    
-    Returns:
-        str: Product name or None if not found
-    """
-    try:
-        with ProductNameExtractor(headless=True) as extractor:
-            return extractor.extract_product_name(url, method='both')
-    except Exception as e:
-        print(f"Error: {e}")
-        # Fallback to URL extraction only
-        try:
-            extractor = ProductNameExtractor(headless=True)
-            return extractor.extract_from_url_path(url)
-        except Exception as e2:
-            print(f"Fallback error: {e2}")
-            return None
-
 # Example usage
 def main():
     # Get product URL from user
@@ -427,14 +360,59 @@ def main():
     
     # Using context manager to ensure driver is properly closed
     with ProductNameExtractor(headless=True) as extractor:
-        # Extract product name (tries scraping first, then URL as fallback)
-        product_name = extractor.extract_product_name(product_url, method='both')
+        # Extract product name from actual website
+        product_name = extractor.extract_product_name(product_url, method='scrape')
         
         print("\n" + "=" * 60)
         if product_name:
             print(f"✅ Product Name: {product_name}")
         else:
-            print("❌ Could not extract product name")
+            print("❌ Could not extract product name from the website")
+            print("💡 Trying URL-based extraction as fallback...")
+            
+            # Fallback to URL extraction
+            url_name = extractor.extract_product_name(product_url, method='url')
+            if url_name:
+                print(f"📄 Product Name (from URL): {url_name}")
+            else:
+                print("❌ No product name found")
+
+# Simple function for direct usage
+def get_product_name(url):
+    """
+    Simple function to get product name from URL
+    
+    Args:
+        url (str): Product URL
+    
+    Returns:
+        str: Product name or None if not found
+    """
+    try:
+        with ProductNameExtractor(headless=True) as extractor:
+            return extractor.extract_product_name(url, method='scrape')
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
+
+# Alternative usage without context manager
+def alternative_usage():
+    url = input("Enter product URL: ").strip()
+    
+    if not url:
+        print("No URL provided!")
+        return
+    
+    extractor = ProductNameExtractor(headless=True)
+    
+    try:
+        product_name = extractor.extract_product_name(url, method='scrape')
+        if product_name:
+            print(f"Product Name: {product_name}")
+        else:
+            print("Could not extract product name")
+    finally:
+        extractor.close_driver()  # Important: Always close the driver
 
 if __name__ == "__main__":
     main()

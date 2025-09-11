@@ -1,11 +1,9 @@
 import requests
 import base64
 import os
-from dotenv import load_dotenv
-load_dotenv()
-GROQ_API_KEY=os.getenv("GROQ_API_KEY")
-# # Load API key
-# GROQ_API_KEY = "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"
+
+# Load API key
+GROQ_API_KEY = "you-key"
 if not GROQ_API_KEY:
     raise ValueError("Please set GROQ_API_KEY in your environment.")
 

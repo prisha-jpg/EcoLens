@@ -9,9 +9,6 @@ from typing import Dict, List, Optional, Union, Tuple
 from collections import Counter
 import os
 from dotenv import load_dotenv
-import os
-DATASET_PATH = os.path.join(os.path.dirname(__file__), "ocr", "merged_dataset.csv")
-
 load_dotenv()
 os.environ['TAVILY_API_KEY']=os.getenv('TAVILY_API_KEY')
 class CosmeticsSearcher:
@@ -609,7 +606,7 @@ def main():
     
     # Initialize the searcher
     searcher = CosmeticsSearcher(
-        csv_file_path=DATASET_PATH,
+        csv_file_path='/Users/prishabirla/Desktop/ADT/final/ocr/merged_dataset.csv',
         tavily_api_key=os.environ['TAVILY_API_KEY']
     )
     

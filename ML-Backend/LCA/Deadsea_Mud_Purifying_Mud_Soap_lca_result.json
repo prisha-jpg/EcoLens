@@ -4,36 +4,36 @@
     "brand": "Ahava",
     "category": "bodywash",
     "weight": "150ml",
-    "packaging_type": "Metal"
+    "packaging_type": "Plastic"
   },
   "lca_results": {
-    "total_emissions_kg_co2e": 1.3336,
-    "eco_score": 88,
+    "total_emissions_kg_co2e": 0.175,
+    "eco_score": 85.7,
     "is_recyclable": true,
-    "confidence_level": 0.903
+    "confidence_level": 0.828
   },
   "stage_breakdown_kg_co2e": {
-    "ingredients": 0.511989,
-    "packaging": 0.739145,
-    "transportation": 0.015606,
+    "ingredients": 0.053969,
+    "packaging": 0.06513,
+    "transportation": 0.013407,
     "manufacturing": 0.0263,
-    "use_phase": 0.0,
-    "end_of_life": 0.03159
+    "use_phase": 0,
+    "end_of_life": 0.016146
   },
   "stage_percentages": {
-    "ingredients": 38.4,
-    "packaging": 55.4,
-    "transportation": 1.2,
-    "manufacturing": 2.0,
+    "ingredients": 30.8,
+    "packaging": 37.2,
+    "transportation": 7.7,
+    "manufacturing": 15.0,
     "use_phase": 0.0,
-    "end_of_life": 2.4
+    "end_of_life": 9.2
   },
   "ingredient_emissions": {
     "Pottasium Lauryl Sulfate": {
-      "emission_kg_co2e": 0.44541,
+      "emission_kg_co2e": 0.0,
       "proportion": 0.707,
       "weight_kg": 0.10605,
-      "emission_factor": 4.2,
+      "emission_factor": 0.0,
       "uncertainty": 0.077,
       "source": "fuzzy_name_match_78"
     },
@@ -50,22 +50,22 @@
       "proportion": 0.073,
       "weight_kg": 0.01095,
       "emission_factor": 3.5,
-      "uncertainty": 0.1,
-      "source": "fallback"
+      "uncertainty": 0.15,
+      "source": "no_match_fallback"
     },
     "Cetearyl Alcohol": {
-      "emission_kg_co2e": 0.0042,
+      "emission_kg_co2e": -0.000267,
       "proportion": 0.01,
       "weight_kg": 0.0015,
-      "emission_factor": 2.8,
+      "emission_factor": -0.178,
       "uncertainty": 0.05,
       "source": "exact_name_match"
     },
     "Stearic acid": {
-      "emission_kg_co2e": 0.0057,
+      "emission_kg_co2e": -0.000193,
       "proportion": 0.01,
       "weight_kg": 0.0015,
-      "emission_factor": 3.8,
+      "emission_factor": -0.129,
       "uncertainty": 0.05,
       "source": "exact_name_match"
     },
@@ -78,10 +78,10 @@
       "source": "synonym_match"
     },
     "Sodiumchlorid": {
-      "emission_kg_co2e": 0.00225,
+      "emission_kg_co2e": 0.0,
       "proportion": 0.01,
       "weight_kg": 0.0015,
-      "emission_factor": 1.5,
+      "emission_factor": 0.0,
       "uncertainty": 0.072,
       "source": "fuzzy_name_match_93"
     },
@@ -114,16 +114,16 @@
       "proportion": 0.01,
       "weight_kg": 0.0015,
       "emission_factor": 3.5,
-      "uncertainty": 0.1,
-      "source": "fallback"
+      "uncertainty": 0.15,
+      "source": "no_match_fallback"
     },
     "Silt (Dead Sea Mud)": {
       "emission_kg_co2e": 0.00525,
       "proportion": 0.01,
       "weight_kg": 0.0015,
       "emission_factor": 3.5,
-      "uncertainty": 0.1,
-      "source": "fallback"
+      "uncertainty": 0.15,
+      "source": "no_match_fallback"
     },
     "Parfum (Fragrance).": {
       "emission_kg_co2e": 5.2e-05,
@@ -135,17 +135,17 @@
     }
   },
   "packaging_analysis": {
-    "plastic_type": "Aluminum",
+    "plastic_type": "PET",
     "packaging_design": "Plastic Bottle",
-    "reasoning": "Metal packaging (assumed aluminum)",
-    "emissions_kg_co2e": 0.739145
+    "reasoning": "Small bottle (150.0ml) typically uses PET",
+    "emissions_kg_co2e": 0.06513
   },
   "recyclability_analysis": {
     "overall_recyclable": true,
     "packaging_recyclable": true,
     "contamination_score": 2,
-    "effective_recycling_rate": 0.34,
-    "regional_infrastructure": "Excellent",
+    "effective_recycling_rate": 0.17,
+    "regional_infrastructure": "Good",
     "limiting_factors": []
   },
   "regional_impact": {
@@ -154,20 +154,20 @@
     "total_electricity_cost_inr": 0.39
   },
   "confidence_scores": {
-    "ingredients": 0.901,
-    "packaging": 0.905,
-    "transportation": 0.903,
-    "manufacturing": 0.9,
-    "use_phase": 0.91,
-    "eol": 0.9,
-    "overall": 0.903
+    "ingredients": 0.825,
+    "packaging": 0.832,
+    "transportation": 0.829,
+    "manufacturing": 0.826,
+    "use_phase": 0.838,
+    "eol": 0.826,
+    "overall": 0.828
   },
   "metadata": {
-    "calculation_timestamp": "2025-08-06T21:00:33.017988",
+    "calculation_timestamp": "2025-09-09T15:46:12.897412",
     "model_version": "EnhancedLCAModel_v2.0",
     "uncertainty_range_kg_co2e": {
-      "min": 1.3069,
-      "max": 1.3603
+      "min": 0.1499,
+      "max": 0.2
     }
   }
 }

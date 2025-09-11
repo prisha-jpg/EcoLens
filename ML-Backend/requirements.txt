@@ -45,8 +45,8 @@ transformers==4.35.2
 # en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl
 
 # Voice Processing (HEAVY ~200MB+)
-git+https://github.com/openai/whisper.git
-pyttsx3==2.90
+# git+https://github.com/openai/whisper.git
+# pyttsx3==2.90
 
 # Advanced ML (HEAVY)
 huggingface-hub==0.19.4
@@ -62,9 +62,3 @@ tavily-python
 # PyYAML==6.0.1
 # tqdm==4.66.1
 # typer==0.9.01w
-
-selenium==4.15.2
-webdriver-manager==4.0.1
-requests==2.31.0
-beautifulsoup4==4.12.2
-lxml==4.9.3

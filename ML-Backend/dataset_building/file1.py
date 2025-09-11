@@ -12,9 +12,6 @@ import warnings
 import math
 from fuzzywuzzy import fuzz
 from geopy.distance import geodesic
-import os
-EMISSION_PATH = os.path.join(os.path.dirname(__file__), "save.csv")
-
 warnings.filterwarnings('ignore')
 
 @dataclass
@@ -41,8 +38,8 @@ class EnhancedLCAModel:
     """
     Enhanced Production-ready ML-based LCA Calculator for Indian Market
     """
-
-    def __init__(self, emission_csv_path: str = EMISSION_PATH):
+    
+    def __init__(self, emission_csv_path: str = "save.csv"):
         # Load real emission factors from CSV
         self.emission_factors_db = self._load_real_emission_factors(emission_csv_path)
         
@@ -1850,8 +1847,8 @@ def main():
     """Example usage of the Enhanced LCA Model with JSON output"""
     
     # Initialize the model
-    lca_model = EnhancedLCAModel(EMISSION_PATH)
-
+    lca_model = EnhancedLCAModel("save.csv")
+    
     # Your existing product data...
     actual_product = {
         'product_name': 'Deadsea Mud Purifying Mud Soap',

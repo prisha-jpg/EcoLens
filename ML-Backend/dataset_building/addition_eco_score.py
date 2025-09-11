@@ -291,7 +291,7 @@ def process_product_table_with_eco_scores(csv_file_path, emission_factors_csv="s
                 'usage_frequency': 'daily'
             }
             
-            # Calculate base LCA FIRST
+            # Calculate base LCA
             result = lca_model.calculate_comprehensive_lca(product_data)
             base_score = result.eco_score
 
@@ -390,7 +390,6 @@ def add_eco_scores_to_dataframe(df, emission_factors_csv="save.csv"):
                 'usage_frequency': 'daily'
             }
             
-            # Calculate base LCA FIRST
             result = lca_model.calculate_comprehensive_lca(product_data)
             base_score = result.eco_score
 

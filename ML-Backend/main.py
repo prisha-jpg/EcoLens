@@ -1,7 +1,3 @@
-import os
-os.environ["HF_HOME"] = "/tmp"  
-os.environ["TRANSFORMERS_CACHE"] = "/tmp"
-os.environ["XDG_CACHE_HOME"] = "/tmp"
 from fastapi import FastAPI, HTTPException, UploadFile, File, Form,Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
@@ -33,12 +29,9 @@ from groq import Groq
 from ocr.url import ProductNameExtractor, get_product_name
 from urllib.parse import urlparse
 from LCA.product_matching import CosmeticsSearcher
-from ocr.barcode import EnhancedBarcodeProductPipeline
-from ocr.url_final import EnhancedIntegratedProductPipeline
-import os
+from ocr.barcode import lookup_upc_product
+from ocr.url import get_product_name
 load_dotenv()
-EMISSION_PATH = os.path.join(os.path.dirname(__file__), "save.csv")
-DATASET_PATH = os.path.join(os.path.dirname(__file__), "ocr", "merged_dataset.csv")
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -83,7 +76,7 @@ async def startup_event():
         # Initialize LCA Model first (required by comparison_system)
         try:
             logger.info("Initializing LCA Model...")
-            lca_model = EnhancedLCAModel(EMISSION_PATH)
+            lca_model = EnhancedLCAModel("/Users/prishabirla/Desktop/ADT/final/LCA/save.csv")
             lca_model.initialize_models()
             logger.info("✅ LCA Model initialized successfully")
         except Exception as e:
@@ -94,7 +87,7 @@ async def startup_event():
         try:
             if lca_model:
                 logger.info("Initializing Product Comparison System...")
-                comparison_system = ProductComparisonLCA(EMISSION_PATH)
+                comparison_system = ProductComparisonLCA("/Users/prishabirla/Desktop/ADT/final/LCA/save.csv")
                 logger.info("✅ Product Comparison System initialized successfully")
             else:
                 logger.warning("❌ Cannot initialize Product Comparison System: LCA Model failed to load")
@@ -107,7 +100,7 @@ async def startup_event():
         try:
             logger.info("Initializing Alternatives Finder...")
             alternatives_finder = EcoFriendlyAlternativesFinder(
-                csv_file_path=DATASET_PATH
+                csv_file_path="/Users/prishabirla/Desktop/ADT/final/ocr/merged_dataset.csv"
             )
             logger.info("✅ Alternatives Finder initialized successfully")
         except Exception as e:
@@ -125,7 +118,14 @@ async def startup_event():
                     groq_client = Groq(api_key=groq_key)
                     logger.info("✅ Groq client initialized successfully (standard method)")
                 except TypeError as e:
-                    logger.warning(f"Standard Groq initialization failed: {e}")
+                    if "proxies" in str(e):
+                        # Method 2: Basic initialization without extra parameters
+                        logger.info("Trying alternative Groq initialization...")
+                        import groq
+                        groq_client = groq.Groq(api_key=groq_key)
+                        logger.info("✅ Groq client initialized successfully (alternative method)")
+                    else:
+                        raise e
             else:
                 logger.warning("❌ GROQ_API_KEY not found in environment variables")
                 groq_client = None
@@ -564,179 +564,258 @@ def extract_label(request: ImagePathRequest):
 @app.get("/get_barcode")
 async def get_product_by_barcode(barcode: str):
     """
-    Get product information by barcode using enhanced pipeline with guaranteed ingredients
+    Get product information by barcode and match with cosmetics database
     """
     try:
-        # Initialize the enhanced barcode pipeline
-        pipeline = EnhancedBarcodeProductPipeline(
-            csv_file_path=DATASET_PATH,
-            tavily_api_key=os.environ.get('TAVILY_API_KEY')
-        )
-        
-        # Process barcode through enhanced pipeline
-        result = pipeline.process_barcode_to_product_details(barcode)
-        
-        if result.get('success', False):
-            # Success - product found and processed
-            return {
-                "success": True,
-                "source": {
-                    "barcode": result.get('barcode_data', {}),
-                    "database": {
-                        "found": True,
-                        "search_method": result.get('search_method'),
-                        "match_confidence": result.get('match_confidence')
-                    }
-                },
-                "product": {
-                    'product_name': result.get('product_name'),
-                    'brand': result.get('brand'),
-                    'category': result.get('category'),
-                    'ingredients': result.get('ingredient_list'),
-                    'manufacturing_location': result.get('manufacturing_loc'),
-                    'weight': result.get('weight'),
-                    'packaging_type': result.get('packaging_type'),
-                    'latitude': result.get('latitude'),
-                    'longitude': result.get('longitude'),
-                    'usage_frequency': result.get('usage_frequency'),
-                    'match_confidence': result.get('match_confidence', 'medium'),
-                    'eco_score': 'N/A'  # Can be calculated separately if needed
-                },
-                "metadata": {
-                    "source_barcode": result.get('source_barcode'),
-                    "search_method": result.get('search_method'),
-                    "has_guaranteed_ingredients": True,
-                    "note": result.get('note')
-                }
-            }
-        else:
-            # Error occurred during processing
-            error_msg = result.get('error', 'Unknown error occurred')
+        # Step 1: Get product info from UPC API
+        barcode_data = lookup_upc_product(barcode)
+        if not barcode_data or "error" in barcode_data:
             return {
                 "success": False,
-                "source": "enhanced_barcode_pipeline",
-                "error": error_msg,
-                "barcode": barcode
+                "source": "barcode",
+                "error": "No product found for this barcode"
+            }
+        
+        product_name = barcode_data.get("product_name", "").strip()
+        if not product_name:
+            return {
+                "success": False,
+                "source": "barcode",
+                "error": "No product name found in barcode data"
+            }
+
+        # Step 2: Search in cosmetics database
+        try:
+            cosmetics_searcher = CosmeticsSearcher(
+                csv_file_path="/Users/prishabirla/Desktop/ADT/final/ocr/merged_dataset.csv",
+                tavily_api_key=os.environ.get('TAVILY_API_KEY')
+            )
+            
+            # Create product dict for matching
+            user_product = {
+                'product_name': product_name,
+                'brand': barcode_data.get('brand', 'Unknown'),
+                'category': 'Unknown',
+                'weight': barcode_data.get('weight', 'Unknown'),
+                'packaging_type': 'Unknown',
+                'ingredient_list': '',
+                'latitude': 12.9716,
+                'longitude': 77.5946,
+                'usage_frequency': 'daily',
+                'manufacturing_loc': 'Unknown'
+            }
+            
+            # Search in database
+            search_result_json = cosmetics_searcher.search_product(user_product)
+            search_result = json.loads(search_result_json)
+            
+            if search_result.get('found', False):
+                # Merge barcode and database data
+                product_details = search_result['product_details']
+                return {
+                    "success": True,
+                    "source": {
+                        "barcode": barcode_data,
+                        "database": search_result
+                    },
+                    "product": {
+                        'product_name': product_details.get('product_name', product_name),
+                        'brand': product_details.get('brand', barcode_data.get('brand', 'Unknown')),
+                        'category': product_details.get('category', 'Personal Care'),
+                        'ingredients': product_details.get('ingredients', 'Not available'),
+                        'manufacturing_location': product_details.get('manufacturing location', 'Unknown'),
+                        'weight_value': product_details.get('weight_value', '0'),
+                        'weight_unit': product_details.get('weight_unit', 'ml'),
+                        'match_confidence': search_result.get('match_confidence', 'low'),
+                        'eco_score': product_details.get('eco_score', 'N/A')
+                    }
+                }
+            else:
+                return {
+                    "success": True,
+                    "source": {
+                        "barcode": barcode_data,
+                        "database": None
+                    },
+                    "product": user_product,
+                    "message": "Product found in barcode lookup but not in cosmetics database"
+                }
+                
+        except Exception as e:
+            logger.error(f"Database search error: {e}")
+            return {
+                "success": False,
+                "source": {
+                    "barcode": barcode_data,
+                    "database": None
+                },
+                "error": f"Database search failed: {str(e)}"
             }
             
     except Exception as e:
-        logger.error(f"Enhanced barcode pipeline error: {e}")
+        logger.error(f"Barcode lookup error: {e}")
         return {
             "success": False,
-            "source": "enhanced_barcode_pipeline",
-            "error": f"Pipeline processing failed: {str(e)}",
-            "barcode": barcode
+            "source": "barcode",
+            "error": f"Failed to fetch barcode info: {str(e)}"
         }
-
 
 @app.get("/get_url")
 async def get_product_by_url(url: str):
     """
-    Get product information from URL using enhanced pipeline with guaranteed ingredients
+    Get product information from URL and match with cosmetics database
     """
     try:
-        # Initialize the enhanced URL pipeline
-        pipeline = EnhancedIntegratedProductPipeline(
-            csv_file_path=DATASET_PATH,
-            tavily_api_key=os.environ.get('TAVILY_API_KEY')
-        )
-        
-        # Process URL through enhanced pipeline
-        result = pipeline.process_url_to_product_details(url)
-        
-        if result.get('success', False):
-            # Success - product found and processed
+        # Step 1: Extract product name from URL
+        product_name = get_product_name(url)
+        if not product_name:
             return {
-                "success": True,
-                "source": {
-                    "url": {
-                        "original_url": result.get('source_url', url),
-                        "extracted_name": result.get('product_name')
-                    },
-                    "database": {
-                        "found": True,
-                        "search_method": result.get('search_method'),
-                        "match_confidence": result.get('match_confidence')
-                    }
-                },
-                "product": {
-                    'product_name': result.get('product_name'),
-                    'brand': result.get('brand'),
-                    'category': result.get('category'),
-                    'ingredients': result.get('ingredient_list'),
-                    'manufacturing_location': result.get('manufacturing_loc'),
-                    'weight': result.get('weight'),
-                    'packaging_type': result.get('packaging_type'),
-                    'latitude': result.get('latitude'),
-                    'longitude': result.get('longitude'),
-                    'usage_frequency': result.get('usage_frequency'),
-                    'match_confidence': result.get('match_confidence', 'medium'),
-                    'eco_score': 'N/A'  # Can be calculated separately if needed
-                },
-                "metadata": {
-                    "source_url": result.get('source_url'),
-                    "search_method": result.get('search_method'),
-                    "has_guaranteed_ingredients": True,
-                    "note": result.get('note')
-                }
+                "success": False,
+                "source": "url",
+                "error": "Could not extract product name from URL"
             }
-        else:
-            # Product name extracted but not found in database - still has generated ingredients
-            if 'product_name' in result:
+
+        # Step 2: Search in cosmetics database
+        try:
+            cosmetics_searcher = CosmeticsSearcher(
+                csv_file_path="/Users/prishabirla/Desktop/ADT/final/ocr/merged_dataset.csv",
+                tavily_api_key=os.environ.get('TAVILY_API_KEY')
+            )
+            
+            # Create product dict for matching
+            user_product = {
+                'product_name': product_name,
+                'brand': 'Unknown',  # URL extraction doesn't provide brand
+                'category': 'Unknown',
+                'weight': 'Unknown',
+                'packaging_type': 'Unknown',
+                'ingredient_list': '',
+                'latitude': 12.9716,
+                'longitude': 77.5946,
+                'usage_frequency': 'daily',
+                'manufacturing_loc': 'Unknown'
+            }
+            
+            # Search in database
+            search_result_json = cosmetics_searcher.search_product(user_product)
+            search_result = json.loads(search_result_json)
+            
+            if search_result.get('found', False):
+                # Product found in database
+                product_details = search_result['product_details']
                 return {
                     "success": True,
                     "source": {
                         "url": {
-                            "original_url": url,
-                            "extracted_name": result.get('product_name')
+                            "extracted_name": product_name,
+                            "original_url": url
                         },
-                        "database": {
-                            "found": False,
-                            "search_method": result.get('search_method')
-                        }
+                        "database": search_result
                     },
                     "product": {
-                        'product_name': result.get('product_name'),
-                        'brand': result.get('brand'),
-                        'category': result.get('category'),
-                        'ingredients': result.get('ingredient_list'),
-                        'manufacturing_location': result.get('manufacturing_loc'),
-                        'weight': result.get('weight'),
-                        'packaging_type': result.get('packaging_type'),
-                        'latitude': result.get('latitude'),
-                        'longitude': result.get('longitude'),
-                        'usage_frequency': result.get('usage_frequency'),
-                        'match_confidence': 'generated',
-                        'eco_score': 'N/A'
-                    },
-                    "metadata": {
-                        "source_url": url,
-                        "search_method": result.get('search_method'),
-                        "has_guaranteed_ingredients": True,
-                        "note": result.get('note', 'Product extracted but not found in database. Ingredients generated.')
-                    },
-                    "message": "Product name extracted from URL but not found in cosmetics database. Generated typical ingredients based on product type."
+                        'product_name': product_details.get('product_name', product_name),
+                        'brand': product_details.get('brand', 'Unknown'),
+                        'category': product_details.get('category', 'Personal Care'),
+                        'ingredients': product_details.get('ingredients', 'Not available'),
+                        'manufacturing_location': product_details.get('manufacturing location', 'Unknown'),
+                        'weight_value': product_details.get('weight_value', '0'),
+                        'weight_unit': product_details.get('weight_unit', 'ml'),
+                        'match_confidence': search_result.get('match_confidence', 'low'),
+                        'eco_score': product_details.get('eco_score', 'N/A')
+                    }
                 }
             else:
-                # Error occurred during processing
-                error_msg = result.get('error', 'Unknown error occurred')
                 return {
-                    "success": False,
-                    "source": "enhanced_url_pipeline",
-                    "error": error_msg,
-                    "url": url
+                    "success": True,
+                    "source": {
+                        "url": {
+                            "extracted_name": product_name,
+                            "original_url": url
+                        },
+                        "database": None
+                    },
+                    "product": user_product,
+                    "message": "Product name extracted from URL but not found in cosmetics database"
                 }
+                
+        except Exception as e:
+            logger.error(f"Database search error: {e}")
+            return {
+                "success": False,
+                "source": {
+                    "url": {
+                        "extracted_name": product_name,
+                        "original_url": url
+                    },
+                    "database": None
+                },
+                "error": f"Database search failed: {str(e)}"
+            }
             
     except Exception as e:
-        logger.error(f"Enhanced URL pipeline error: {e}")
+        logger.error(f"URL extraction error: {e}")
         return {
             "success": False,
-            "source": "enhanced_url_pipeline",
-            "error": f"Pipeline processing failed: {str(e)}",
-            "url": url
+            "source": "url",
+            "error": f"Failed to extract product info from URL: {str(e)}"
         }
 
 
+@app.post("/api/extract-product-name", response_model=ProductURLResponse)
+async def extract_product_name_from_url(url_input: ProductURLInput):
+    """
+    Extract product name from product URL using web scraping or URL parsing.
+    """
+    try:
+        # Validate URL format
+        if not url_input.product_url.startswith(('http://', 'https://')):
+            raise HTTPException(
+                status_code=400, 
+                detail="Please provide a valid URL starting with http:// or https://"
+            )
+        
+        # Parse domain for logging
+        parsed_url = urlparse(url_input.product_url)
+        domain = parsed_url.netloc.lower()
+        
+        logger.info(f"Extracting product name from {domain} using method: {url_input.extraction_method}")
+        
+        if not product_extractor:
+            # Fallback to simple function if extractor not initialized
+            product_name = get_product_name(url_input.product_url)
+        else:
+            # Use the initialized extractor with context manager pattern
+            with product_extractor as extractor:
+                product_name = extractor.extract_product_name(
+                    url_input.product_url, 
+                    method=url_input.extraction_method
+                )
+        
+        if product_name:
+            return ProductURLResponse(
+                success=True,
+                product_url=url_input.product_url,
+                product_name=product_name,
+                extraction_method=url_input.extraction_method,
+                message=f"Successfully extracted product name from {domain}"
+            )
+        else:
+            return ProductURLResponse(
+                success=False,
+                product_url=url_input.product_url,
+                product_name=None,
+                extraction_method=url_input.extraction_method,
+                message=f"Could not extract product name from {domain}. Try a different extraction method."
+            )
+            
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error extracting product name from URL: {e}")
+        raise HTTPException(
+            status_code=500, 
+            detail=f"Failed to extract product name: {str(e)}"
+        )
 # Route 1: Get Eco Score (Dashboard redirect)
 @app.post("/api/get-eco-score", response_model=EcoScoreResponse)
 async def get_eco_score(product_input: ProductInput):

@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 import requests
 
 # Import your existing classes
-from ocr.product_matching import CosmeticsSearcher
+from product_matching import CosmeticsSearcher  # Your product matching module
 
 load_dotenv()
 

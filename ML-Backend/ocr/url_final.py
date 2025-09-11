@@ -5,8 +5,8 @@ from typing import Dict, Optional, List
 from dotenv import load_dotenv
 
 # Import your existing classes
-from ocr.url import ProductNameExtractor  # Your URL extraction module
-from ocr.product_matching import CosmeticsSearcher  # Your product matching module
+from url import ProductNameExtractor  # Your URL extraction module
+from product_matching import CosmeticsSearcher  # Your product matching module
 
 load_dotenv()
 
