@@ -5,7 +5,7 @@
 </p>
 
 <h1 align="center">🌍 EcoLens</h1>
-<p align="center">AI-Powered Sustainability Analyzer for Cosmetics & Packaging</p>
+<p align="center">AI-Powered Environmental Sustainability Analyzer </p>
 
 <p align="center">
   <i>Redefining sustainability by revealing the hidden footprint of everyday products.</i>
