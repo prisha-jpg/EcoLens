@@ -1,0 +1,70 @@
+# RENDER OPTIMIZED - Minimal dependencies for 512MB deployment
+
+# Core FastAPI (REQUIRED)
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+gunicorn==21.2.0
+python-multipart==0.0.6
+python-dotenv==1.0.0
+pydantic==2.5.0
+
+# Essential Data Processing (REQUIRED)
+pandas==2.1.3
+numpy==1.25.2
+requests==2.31.0
+psutil==5.9.5
+
+# LLM Client (REQUIRED)
+groq==0.4.1
+
+# Basic ML (REQUIRED if LCA module needs it)
+scikit-learn==1.3.2
+
+# Geographic calculations (REQUIRED if using location features)
+geopy==2.4.0
+
+# String matching (REQUIRED for alternatives finder)
+fuzzywuzzy==0.18.0
+python-Levenshtein==0.23.0
+
+# HEAVY DEPENDENCIES - COMMENTED OUT FOR RENDER
+# Uncomment ONLY if you have enough memory and set environment variables
+
+# Computer Vision (VERY HEAVY ~1GB+)
+# easyocr==1.7.0
+pillow==10.1.0
+
+# Deep Learning (EXTREMELY HEAVY ~2GB+)
+torch==2.1.1
+torchvision==0.16.1  
+torchaudio==2.1.1
+transformers==4.35.2
+
+# NLP Models (VERY HEAVY ~500MB+)
+# spacy==3.7.2
+# en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl
+
+# Voice Processing (HEAVY ~200MB+)
+git+https://github.com/openai/whisper.git
+pyttsx3==2.90
+
+# Advanced ML (HEAVY)
+huggingface-hub==0.19.4
+tokenizers==0.15.0
+safetensors==0.4.1
+
+# Visualization (MEDIUM)
+matplotlib==3.8.2
+seaborn==0.13.0
+tavily-python
+
+# Additional utilities (if absolutely needed)
+# PyYAML==6.0.1
+# tqdm==4.66.1
+# typer==0.9.01w
+
+selenium==4.15.2
+webdriver-manager==4.0.1
+requests==2.31.0
+beautifulsoup4==4.12.2
+lxml==4.9.3

@@ -1,0 +1,173 @@
+{
+  "product_info": {
+    "name": "Deadsea Mud Purifying Mud Soap",
+    "brand": "Ahava",
+    "category": "bodywash",
+    "weight": "150ml",
+    "packaging_type": "Metal"
+  },
+  "lca_results": {
+    "total_emissions_kg_co2e": 1.3336,
+    "eco_score": 88,
+    "is_recyclable": true,
+    "confidence_level": 0.903
+  },
+  "stage_breakdown_kg_co2e": {
+    "ingredients": 0.511989,
+    "packaging": 0.739145,
+    "transportation": 0.015606,
+    "manufacturing": 0.0263,
+    "use_phase": 0.0,
+    "end_of_life": 0.03159
+  },
+  "stage_percentages": {
+    "ingredients": 38.4,
+    "packaging": 55.4,
+    "transportation": 1.2,
+    "manufacturing": 2.0,
+    "use_phase": 0.0,
+    "end_of_life": 2.4
+  },
+  "ingredient_emissions": {
+    "Pottasium Lauryl Sulfate": {
+      "emission_kg_co2e": 0.44541,
+      "proportion": 0.707,
+      "weight_kg": 0.10605,
+      "emission_factor": 4.2,
+      "uncertainty": 0.077,
+      "source": "fuzzy_name_match_78"
+    },
+    "Disodium Lauryl Sulfosuccinate": {
+      "emission_kg_co2e": 0.001961,
+      "proportion": 0.121,
+      "weight_kg": 0.01815,
+      "emission_factor": 0.108,
+      "uncertainty": 0.072,
+      "source": "fuzzy_name_match_92"
+    },
+    "Corn (Zea Mays) Starch": {
+      "emission_kg_co2e": 0.038325,
+      "proportion": 0.073,
+      "weight_kg": 0.01095,
+      "emission_factor": 3.5,
+      "uncertainty": 0.1,
+      "source": "fallback"
+    },
+    "Cetearyl Alcohol": {
+      "emission_kg_co2e": 0.0042,
+      "proportion": 0.01,
+      "weight_kg": 0.0015,
+      "emission_factor": 2.8,
+      "uncertainty": 0.05,
+      "source": "exact_name_match"
+    },
+    "Stearic acid": {
+      "emission_kg_co2e": 0.0057,
+      "proportion": 0.01,
+      "weight_kg": 0.0015,
+      "emission_factor": 3.8,
+      "uncertainty": 0.05,
+      "source": "exact_name_match"
+    },
+    "Aqua (Water)": {
+      "emission_kg_co2e": 0.000137,
+      "proportion": 0.01,
+      "weight_kg": 0.0015,
+      "emission_factor": 0.091,
+      "uncertainty": 0.06,
+      "source": "synonym_match"
+    },
+    "Sodiumchlorid": {
+      "emission_kg_co2e": 0.00225,
+      "proportion": 0.01,
+      "weight_kg": 0.0015,
+      "emission_factor": 1.5,
+      "uncertainty": 0.072,
+      "source": "fuzzy_name_match_93"
+    },
+    "Sodium Sulfate": {
+      "emission_kg_co2e": 0.001727,
+      "proportion": 0.01,
+      "weight_kg": 0.0015,
+      "emission_factor": 1.151,
+      "uncertainty": 0.076,
+      "source": "fuzzy_name_match_79"
+    },
+    "Citric Acid": {
+      "emission_kg_co2e": 0.001727,
+      "proportion": 0.01,
+      "weight_kg": 0.0015,
+      "emission_factor": 1.151,
+      "uncertainty": 0.05,
+      "source": "exact_name_match"
+    },
+    "Titanium Dioxide": {
+      "emission_kg_co2e": 0.0,
+      "proportion": 0.01,
+      "weight_kg": 0.0015,
+      "emission_factor": 0.0,
+      "uncertainty": 0.05,
+      "source": "exact_name_match"
+    },
+    "Magnesiumcarbonat": {
+      "emission_kg_co2e": 0.00525,
+      "proportion": 0.01,
+      "weight_kg": 0.0015,
+      "emission_factor": 3.5,
+      "uncertainty": 0.1,
+      "source": "fallback"
+    },
+    "Silt (Dead Sea Mud)": {
+      "emission_kg_co2e": 0.00525,
+      "proportion": 0.01,
+      "weight_kg": 0.0015,
+      "emission_factor": 3.5,
+      "uncertainty": 0.1,
+      "source": "fallback"
+    },
+    "Parfum (Fragrance).": {
+      "emission_kg_co2e": 5.2e-05,
+      "proportion": 0.01,
+      "weight_kg": 0.0015,
+      "emission_factor": 0.035,
+      "uncertainty": 0.074,
+      "source": "fuzzy_name_match_86"
+    }
+  },
+  "packaging_analysis": {
+    "plastic_type": "Aluminum",
+    "packaging_design": "Plastic Bottle",
+    "reasoning": "Metal packaging (assumed aluminum)",
+    "emissions_kg_co2e": 0.739145
+  },
+  "recyclability_analysis": {
+    "overall_recyclable": true,
+    "packaging_recyclable": true,
+    "contamination_score": 2,
+    "effective_recycling_rate": 0.34,
+    "regional_infrastructure": "Excellent",
+    "limiting_factors": []
+  },
+  "regional_impact": {
+    "region_determined": "South",
+    "grid_factor": 0.68,
+    "total_electricity_cost_inr": 0.39
+  },
+  "confidence_scores": {
+    "ingredients": 0.901,
+    "packaging": 0.905,
+    "transportation": 0.903,
+    "manufacturing": 0.9,
+    "use_phase": 0.91,
+    "eol": 0.9,
+    "overall": 0.903
+  },
+  "metadata": {
+    "calculation_timestamp": "2025-08-06T21:00:33.017988",
+    "model_version": "EnhancedLCAModel_v2.0",
+    "uncertainty_range_kg_co2e": {
+      "min": 1.3069,
+      "max": 1.3603
+    }
+  }
+}

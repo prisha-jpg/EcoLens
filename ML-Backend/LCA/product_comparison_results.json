@@ -1,0 +1,158 @@
+{
+  "comparison_metadata": {
+    "timestamp": "2025-08-06T22:35:09.689971",
+    "model_version": "ProductComparisonLCA_v1.0",
+    "comparison_type": "comprehensive_sustainability_analysis"
+  },
+  "products": {
+    "product1": {
+      "info": {
+        "product_name": "Organic Anti-Aging Face Cream",
+        "brand": "Natural Beauty Co",
+        "category": "face cream",
+        "weight": "50ml",
+        "packaging_type": "Glass",
+        "ingredient_list": "Aqua, Organic Aloe Vera Extract, Organic Jojoba Oil, Hyaluronic Acid, Vitamin E, Organic Rosehip Oil, Cetearyl Alcohol, Glycerin, Organic Shea Butter, Vitamin C, Retinol, Organic Green Tea Extract, Natural Preservatives",
+        "latitude": 12.9716,
+        "longitude": 77.5946,
+        "usage_frequency": "daily"
+      },
+      "results": {
+        "total_emissions_kg_co2e": 0.073,
+        "eco_score": 88,
+        "is_recyclable": true,
+        "plastic_type": "Glass",
+        "stage_breakdown": {
+          "ingredients": 0.023934,
+          "packaging": 0.020674,
+          "transportation": 0.005369,
+          "manufacturing": 0.0108,
+          "use_phase": 0.0,
+          "end_of_life": 0.0117
+        }
+      }
+    },
+    "product2": {
+      "info": {
+        "product_name": "Daily Moisture Face Cream",
+        "brand": "Drugstore Brand",
+        "category": "face cream",
+        "weight": "75ml",
+        "packaging_type": "Plastic",
+        "ingredient_list": "Water, Dimethicone, Glycerin, Petrolatum, Cetearyl Alcohol, Fragrance, Parabens, Mineral Oil, Carbomer, Sodium Lauryl Sulfate, Artificial Colors, Preservatives",
+        "latitude": 28.6139,
+        "longitude": 77.209,
+        "usage_frequency": "daily"
+      },
+      "results": {
+        "total_emissions_kg_co2e": 0.1044,
+        "eco_score": 88,
+        "is_recyclable": true,
+        "plastic_type": "PET",
+        "stage_breakdown": {
+          "ingredients": 0.026513,
+          "packaging": 0.039078,
+          "transportation": 0.009317,
+          "manufacturing": 0.0169,
+          "use_phase": 0.0,
+          "end_of_life": 0.011923
+        }
+      }
+    }
+  },
+  "comparison_results": {
+    "winners": {
+      "carbon_footprint": "🏆 Organic Anti-Aging Face Cream wins with 30.1% lower emissions (0.073 vs 0.104 kg CO2e)",
+      "eco_score": "🤝 Tie - Both products have similar eco-scores",
+      "recyclability": "🏆 Organic Anti-Aging Face Cream wins - Higher effective recycling rate (25.5% vs 15.0%)",
+      "packaging": "🏆 Organic Anti-Aging Face Cream wins - More sustainable packaging material (Glass vs PET)",
+      "overall": "🏆 Overall Winner: Organic Anti-Aging Face Cream (Sustainability Score: 70.6 vs 59.5)"
+    },
+    "improvement_recommendations": {
+      "Organic Anti-Aging Face Cream": [],
+      "Daily Moisture Face Cream": [
+        "⚡ High grid emission factor in region - Consider renewable energy certificates"
+      ]
+    },
+    "cost_comparison": {
+      "product1_electricity_cost": 0.161,
+      "product2_electricity_cost": 0.234,
+      "cost_difference_inr": 0.072,
+      "cost_savings_percentage": 31.003
+    },
+    "sustainability_metrics": {
+      "carbon_intensity": {
+        "product1_per_kg": 1.4595,
+        "product2_per_kg": 1.392
+      },
+      "packaging_efficiency": {
+        "product1_ratio": 0.2833,
+        "product2_ratio": 0.3743
+      },
+      "manufacturing_efficiency": {
+        "product1_ratio": 0.148,
+        "product2_ratio": 0.1619
+      },
+      "recyclability_score": {
+        "product1_score": 25.5,
+        "product2_score": 15.0
+      }
+    },
+    "detailed_stage_comparison": {
+      "ingredients": {
+        "product1_emission": 0.023934,
+        "product2_emission": 0.026513,
+        "product1_percentage": 32.7977,
+        "product2_percentage": 25.395927,
+        "winner": "Organic Anti-Aging Face Cream",
+        "improvement_percentage": 9.725367
+      },
+      "packaging": {
+        "product1_emission": 0.020674,
+        "product2_emission": 0.039078,
+        "product1_percentage": 28.330446,
+        "product2_percentage": 37.432448,
+        "winner": "Organic Anti-Aging Face Cream",
+        "improvement_percentage": 47.095623
+      },
+      "transportation": {
+        "product1_emission": 0.005369,
+        "product2_emission": 0.009317,
+        "product1_percentage": 7.357005,
+        "product2_percentage": 8.924824,
+        "winner": "Organic Anti-Aging Face Cream",
+        "improvement_percentage": 42.378068
+      },
+      "manufacturing": {
+        "product1_emission": 0.0108,
+        "product2_emission": 0.0169,
+        "product1_percentage": 14.799602,
+        "product2_percentage": 16.188231,
+        "winner": "Organic Anti-Aging Face Cream",
+        "improvement_percentage": 36.094675
+      },
+      "use_phase": {
+        "product1_emission": 0.0,
+        "product2_emission": 0.0,
+        "product1_percentage": 0.0,
+        "product2_percentage": 0.0,
+        "winner": "Tie",
+        "improvement_percentage": 0
+      },
+      "end_of_life": {
+        "product1_emission": 0.0117,
+        "product2_emission": 0.011923,
+        "product1_percentage": 16.032902,
+        "product2_percentage": 11.421037,
+        "winner": "Organic Anti-Aging Face Cream",
+        "improvement_percentage": 1.871981
+      }
+    }
+  },
+  "summary": {
+    "overall_winner": "🏆 Overall Winner: Organic Anti-Aging Face Cream (Sustainability Score: 70.6 vs 59.5)",
+    "carbon_footprint_leader": "product1",
+    "eco_score_leader": "product2",
+    "recyclability_leader": "tie"
+  }
+}
