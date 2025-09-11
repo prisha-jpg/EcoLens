@@ -3,7 +3,7 @@ import base64
 import os
 
 # Load API key
-GROQ_API_KEY = "you-key"
+GROQ_API_KEY = "your-key"
 if not GROQ_API_KEY:
     raise ValueError("Please set GROQ_API_KEY in your environment.")
 

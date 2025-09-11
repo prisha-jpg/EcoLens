@@ -14,13 +14,13 @@ import queue
 import random
 
 # API Key for Gemini
-GEMINI_API_KEY = "AIzaSyBZCaesJALTDsRuLvgBU5a6RWaVcB5JEX8"
+GEMINI_API_KEY = "you-key"
 
 # ElevenLabs API Keys (Multiple keys for rotation)
 ELEVEN_LABS_API_KEYS = [
-    "sk_b0ab2cd5f72c8c7231adc0c98d1e0b4db93a8c8b2fac7d35",  # Original key
-    "sk_1511f98c487320b1ce6da259246543c8a22a6cffa2cbe8f4",  # Add your second API key
-    "sk_aa0d4cf1d05ab199ad77a78b803703e2d51a9dbc28d4b4fd"    # Add your third API key
+    "your-key",  # Original key
+    "your-key",  # Add your second API key
+    "your-key"   # Add your third API key
 ]
 
 # Current API key index
