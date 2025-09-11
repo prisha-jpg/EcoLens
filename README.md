@@ -43,7 +43,7 @@ Every day, millions of purchase decisions are made without understanding their *
 | Layer       | Technologies |
 |-------------|--------------|
 | **Frontend** | React.js, Next.js, TailwindCSS |
-| **Backend** | Python (FastAPI/Flask), MongoDB |
+| **Backend** | Python (Flask), MongoDB, Node.js (server.js), Express.js, |
 | **ML Models** | Transformers, RandomForest, GradientBoosting |
 | **AI Reasoning** | Groq LLaMA-3.1 + Tavily |
 | **Voice AI** | OpenAI Whisper, TTS |
