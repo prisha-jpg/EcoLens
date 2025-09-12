@@ -75,6 +75,8 @@ EcoLens/
 │
 └── README.md                  # Project documentation
 
+---
+
 ## 🔧 Local Setup  
 
 Follow these steps to run EcoLens locally:  
@@ -84,6 +86,7 @@ Follow these steps to run EcoLens locally:
 cd frontend
 npm install
 npm run dev
+
 
 The frontend should now run on http://localhost:3000.
 
