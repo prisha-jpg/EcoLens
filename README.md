@@ -163,7 +163,7 @@ We thank all the amazing contributors who built **EcoLens** 🌱
 - **Loheyta Dhanure** 
 - **Prisha Birla**
 - **Sakshi Sangale** 
-- **Team IEEE Tech Sangam Hackathon** – Ideation & Support  
+
 
 <p align="center">
   Made with ❤️ by Team EcoLens🌍🌱
