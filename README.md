@@ -129,5 +129,45 @@ Frontend → http://localhost:3000
 Backend (Ngrok) → https://xxxxxx.ngrok-free.app
 
 
+## 🔮 Future Scope  
+
+- 🌍 **Cross-Domain Expansion** → Extend sustainability analysis to **food, fashion, consumer electronics, and logistics**, creating a unified eco-intelligence platform.  
+- 🛒 **Seamless Retail Integration** → Partner with **e-commerce platforms, supermarkets, and manufacturers** to embed real-time eco scores into purchase journeys.  
+- 📱 **Ubiquitous Accessibility** → Build **mobile-first apps (Android & iOS)** with AR-powered product scanning for instant sustainability insights.  
+- 🧠 **Smarter AI Insights** → Enhance reasoning with **multi-agent systems** that can cross-verify product data, predict carbon hotspots, and recommend eco-friendly alternatives.  
+- ☁️ **Enterprise SaaS Offering** → Provide a **cloud-based platform** for enterprises, NGOs, and governments to track and improve supply chain sustainability at scale.  
+- 🛰️ **IoT & Satellite Data Fusion** → Incorporate **IoT sensors, geospatial analytics, and satellite imagery** to validate sourcing claims and monitor environmental footprints.  
+- 📊 **Policy & Awareness Impact** → Support **regulatory compliance checks** and build **consumer education dashboards** to drive large-scale behavioral change.  
+
+
+---
+
+## 🔮 Future Scope  
+
+- 🌍 **Global Expansion** → Support for multi-language product databases and region-specific sustainability metrics  
+- 📱 **Mobile App** → Native Android/iOS application for on-the-go product scanning  
+- 🤝 **Retail Integration** → API integration with e-commerce platforms for real-time sustainability scoring  
+- 🧪 **Expanded Domains** → Extend beyond cosmetics to **food, fashion, and electronics**  
+- 📊 **Predictive Analytics** → AI-powered recommendations for sustainable alternatives  
+- ☁️ **Cloud Scaling** → Deploy as a SaaS platform for businesses and policymakers  
+
+---
+
+## 👩‍💻 Contributors  
+
+We thank all the amazing contributors who built **EcoLens** 🌱  
+
+
+- **Anannaya Agarwal**
+- **Ishita Sodhiya**
+- **Loheyta Dhanure** 
+- **Prisha Birla**
+- **Sakshi Sangale** 
+- **Team IEEE Tech Sangam Hackathon** – Ideation & Support  
+
+<p align="center">
+  Made with ❤️ by Team EcoLens🌍🌱
+</p>
+
 
 
