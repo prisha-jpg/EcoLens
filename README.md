@@ -134,7 +134,7 @@ Backend (Ngrok) → https://xxxxxx.ngrok-free.app
 
 ## 🔮 Future Scope  
 
-- 🌍 **Cross-Domain Expansion** → Extend sustainability analysis to **food, fashion, consumer electronics, and logistics**, creating a unified eco-intelligence platform.  
+- 🌍 *Cross-Domain Expansion* → Extend sustainability analysis to **food, fashion, consumer electronics, and logistics**, creating a unified eco-intelligence platform.  
 - 🛒 **Seamless Retail Integration** → Partner with **e-commerce platforms, supermarkets, and manufacturers** to embed real-time eco scores into purchase journeys.  
 - 📱 **Ubiquitous Accessibility** → Build **mobile-first apps (Android & iOS)** with AR-powered product scanning for instant sustainability insights.  
 - 🧠 **Smarter AI Insights** → Enhance reasoning with **multi-agent systems** that can cross-verify product data, predict carbon hotspots, and recommend eco-friendly alternatives.  
