@@ -43,7 +43,7 @@ Every day, millions of purchase decisions are made without understanding their *
 | Layer       | Technologies |
 |-------------|--------------|
 | **Frontend** | React.js, Next.js, TailwindCSS |
-| **Backend** | Python (Flask), MongoDB, Node.js (server.js), Express.js, |
+| **Backend** | Python (Flask, FastAPI), MongoDB, Node.js (server.js), Express.js, |
 | **ML Models** | Transformers, RandomForest, GradientBoosting |
 | **AI Reasoning** | Groq LLaMA-3.1 + Tavily |
 | **Voice AI** | OpenAI Whisper, TTS |
@@ -74,5 +74,60 @@ EcoLens/
 │   └── requirements.txt       # Python dependencies
 │
 └── README.md                  # Project documentation
+
+## 🔧 Local Setup  
+
+Follow these steps to run EcoLens locally:  
+
+### 1️⃣ Frontend (Terminal 1)  
+```bash
+cd frontend
+npm install
+npm run dev
+
+The frontend should now run on http://localhost:3000.
+
+2️⃣ Backend with Ngrok (Terminal 2)
+cd backend
+ngrok http 5001
+
+
+Copy the generated HTTPS URL (e.g., https://2593391a16e1.ngrok-free.app).
+
+Open your .env file and paste it as your BACKEND_PUBLIC_URL.
+
+3️⃣ Backend Server (Terminal 3)
+cd backend
+node server.js
+
+4️⃣ Configure .env
+
+Create a .env file inside the backend/ directory with the following variables:
+
+PORT=5001
+ML_BASE_URL=https://prishaa-library-space.hf.space
+
+# Replace this with your ngrok URL
+BACKEND_PUBLIC_URL=https://2593391a16e1.ngrok-free.app  
+
+BACKEND_URL=http://localhost:5001
+MONGODB_URI=your_mongodb_connection_string
+
+CLOUDINARY_API_KEY=your_cloudinary_key
+CLOUDINARY_SECRET_KEY=your_cloudinary_secret
+CLOUDINARY_NAME=your_cloudinary_name
+
+JWT_SECRET=your_jwt_secret
+SENDER_EMAIL=your_email
+SENDER_PASSWORD=your_email_password
+GOV_EMAIL=gov_email_if_any
+
+✅ After this setup, your EcoLens app will be live locally with:
+
+Frontend → http://localhost:3000
+
+Backend (Ngrok) → https://xxxxxx.ngrok-free.app
+
+
 
 
