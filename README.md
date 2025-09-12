@@ -5,7 +5,7 @@
 </p>
 
 <h1 align="center">🌍 EcoLens</h1>
-<p align="center">AI-Powered Environmental Sustainability Analyzer </p>
+<p align="center">AI-Powered Environmental Sustainability Analyzer</p>
 
 <p align="center">
   <i>Redefining sustainability by revealing the hidden footprint of everyday products.</i>
@@ -13,56 +13,54 @@
 
 ---
 
-## ✨ Overview  
+## ✨ Overview
 
 Every day, millions of purchase decisions are made without understanding their **environmental cost**.  
-**EcoLens** bridges this gap by analyzing ingredients, lifecycle impact, and packaging choices—empowering both **consumers** and **manufacturers** to make conscious, sustainable decisions.  
+**EcoLens** bridges this gap by analyzing ingredients, lifecycle impact, and packaging choices—empowering both **consumers** and **manufacturers** to make conscious, sustainable decisions.
 
 ---
 
-## 🚀 Key Features  
+## 🚀 Key Features
 
-✅ **Scan-to-Insight** → Instantly uncover a product’s environmental footprint  
+✅ **Scan-to-Insight** → Instantly uncover a product's environmental footprint  
 🧬 **Ingredient Intelligence** → Decode hidden formulations into sustainability metrics  
 📊 **Lifecycle Assessment Engine** → Predict, compare, and optimize product sustainability  
-🧠 **AI-Powered Reasoning** → Contextual insights powered by Groq’s LLaMA models + Tavily  
+🧠 **AI-Powered Reasoning** → Contextual insights powered by Groq's LLaMA models + Tavily  
 🎤 **Voice-First Experience** → Accessibility through Whisper + TTS  
-💻 **Seamless Web App** → Built with React.js, Next.js, and MongoDB for scale  
+💻 **Seamless Web App** → Built with React.js, Next.js, and MongoDB for scale
 
 ---
 
-## 🏆 Recognition  
+## 🏆 Recognition
 
 🌱 **Top 10 Finalist** at *IEEE Tech Sangam Hackathon*  
-🚀 Recognized for combining **AI, Sustainability, and Accessibility** to drive climate impact  
+🚀 Recognized for combining **AI, Sustainability, and Accessibility** to drive climate impact
 
 ---
 
-## ⚙️ Tech Stack  
+## ⚙️ Tech Stack
 
-| Layer       | Technologies |
-|-------------|--------------|
+| Layer | Technologies |
+|-------|--------------|
 | **Frontend** | React.js, Next.js, TailwindCSS |
-| **Backend** | Python (Flask, FastAPI), MongoDB, Node.js (server.js), Express.js, |
+| **Backend** | Python (Flask, FastAPI), MongoDB, Node.js, Express.js |
 | **ML Models** | Transformers, RandomForest, GradientBoosting |
 | **AI Reasoning** | Groq LLaMA-3.1 + Tavily |
 | **Voice AI** | OpenAI Whisper, TTS |
-| **Infra** | Docker, REST APIs |
+| **Infrastructure** | Docker, REST APIs |
 
 ---
 
----
-
-## 📂 Repository Structure  
+## 📂 Repository Structure
 
 ```bash
 EcoLens/
-│── Frontend/                  # React + Next.js web app
+├── Frontend/                  # React + Next.js web app
 │   ├── backend/               # Node.js + Express API for auth, uploads, products
 │   ├── public/                # Static assets (logos, images, icons)
 │   └── src/                   # App pages, components, chatbot, dashboards
 │
-│── ML-Backend/                # AI/ML engine + FastAPI backend
+├── ML-Backend/                # AI/ML engine + FastAPI backend
 │   ├── Agents/                # AI agents (satellite analyst, sustainability reports)
 │   ├── Alerts/                # Eco alerts + monitoring service (Node.js server)
 │   ├── LCA/                   # Lifecycle Assessment models, results & comparisons
@@ -74,39 +72,47 @@ EcoLens/
 │   └── requirements.txt       # Python dependencies
 │
 └── README.md                  # Project documentation
+```
 
 ---
 
-## 🔧 Local Setup  
+## 🔧 Local Setup
 
-Follow these steps to run EcoLens locally:  
+Follow these steps to run EcoLens locally:
 
-### 1️⃣ Frontend (Terminal 1)  
+### 1️⃣ Frontend (Terminal 1)
+
 ```bash
 cd frontend
 npm install
 npm run dev
-
+```
 
 The frontend should now run on http://localhost:3000.
 
-2️⃣ Backend with Ngrok (Terminal 2)
+### 2️⃣ Backend with Ngrok (Terminal 2)
+
+```bash
 cd backend
 ngrok http 5001
+```
 
+Copy the generated HTTPS URL (e.g., `https://2593391a16e1.ngrok-free.app`).
 
-Copy the generated HTTPS URL (e.g., https://2593391a16e1.ngrok-free.app).
+Open your `.env` file and paste it as your `BACKEND_PUBLIC_URL`.
 
-Open your .env file and paste it as your BACKEND_PUBLIC_URL.
+### 3️⃣ Backend Server (Terminal 3)
 
-3️⃣ Backend Server (Terminal 3)
+```bash
 cd backend
 node server.js
+```
 
-4️⃣ Configure .env
+### 4️⃣ Configure .env
 
-Create a .env file inside the backend/ directory with the following variables:
+Create a `.env` file inside the `backend/` directory with the following variables:
 
+```bash
 PORT=5001
 ML_BASE_URL=https://prishaa-library-space.hf.space
 
@@ -124,53 +130,37 @@ JWT_SECRET=your_jwt_secret
 SENDER_EMAIL=your_email
 SENDER_PASSWORD=your_email_password
 GOV_EMAIL=gov_email_if_any
+```
 
-✅ After this setup, your EcoLens app will be live locally with:
+✅ **After this setup, your EcoLens app will be live locally with:**
 
-Frontend → http://localhost:3000
-
-Backend (Ngrok) → https://xxxxxx.ngrok-free.app
-
-
-## 🔮 Future Scope  
-
-- 🌍 *Cross-Domain Expansion* → Extend sustainability analysis to **food, fashion, consumer electronics, and logistics**, creating a unified eco-intelligence platform.  
-- 🛒 **Seamless Retail Integration** → Partner with **e-commerce platforms, supermarkets, and manufacturers** to embed real-time eco scores into purchase journeys.  
-- 📱 **Ubiquitous Accessibility** → Build **mobile-first apps (Android & iOS)** with AR-powered product scanning for instant sustainability insights.  
-- 🧠 **Smarter AI Insights** → Enhance reasoning with **multi-agent systems** that can cross-verify product data, predict carbon hotspots, and recommend eco-friendly alternatives.  
-- ☁️ **Enterprise SaaS Offering** → Provide a **cloud-based platform** for enterprises, NGOs, and governments to track and improve supply chain sustainability at scale.  
-- 🛰️ **IoT & Satellite Data Fusion** → Incorporate **IoT sensors, geospatial analytics, and satellite imagery** to validate sourcing claims and monitor environmental footprints.  
-- 📊 **Policy & Awareness Impact** → Support **regulatory compliance checks** and build **consumer education dashboards** to drive large-scale behavioral change.  
-
+- Frontend → http://localhost:3000
+- Backend (Ngrok) → https://xxxxxx.ngrok-free.app
 
 ---
 
-## 🔮 Future Scope  
+## 🔮 Future Scope
 
-- 🌍 **Global Expansion** → Support for multi-language product databases and region-specific sustainability metrics  
-- 📱 **Mobile App** → Native Android/iOS application for on-the-go product scanning  
-- 🤝 **Retail Integration** → API integration with e-commerce platforms for real-time sustainability scoring  
-- 🧪 **Expanded Domains** → Extend beyond cosmetics to **food, fashion, and electronics**  
-- 📊 **Predictive Analytics** → AI-powered recommendations for sustainable alternatives  
-- ☁️ **Cloud Scaling** → Deploy as a SaaS platform for businesses and policymakers  
+- 🌍 **Cross-Domain Expansion** → Extend sustainability analysis to **food, fashion, consumer electronics, and logistics**, creating a unified eco-intelligence platform.
+- 🛒 **Seamless Retail Integration** → Partner with **e-commerce platforms, supermarkets, and manufacturers** to embed real-time eco scores into purchase journeys.
+- 📱 **Ubiquitous Accessibility** → Build **mobile-first apps (Android & iOS)** with AR-powered product scanning for instant sustainability insights.
+- 🧠 **Smarter AI Insights** → Enhance reasoning with **multi-agent systems** that can cross-verify product data, predict carbon hotspots, and recommend eco-friendly alternatives.
+- ☁️ **Enterprise SaaS Offering** → Provide a **cloud-based platform** for enterprises, NGOs, and governments to track and improve supply chain sustainability at scale.
+- 🛰️ **IoT & Satellite Data Fusion** → Incorporate **IoT sensors, geospatial analytics, and satellite imagery** to validate sourcing claims and monitor environmental footprints.
+- 📊 **Policy & Awareness Impact** → Support **regulatory compliance checks** and build **consumer education dashboards** to drive large-scale behavioral change.
 
 ---
 
-## 👩‍💻 Contributors  
+## 👩‍💻 Contributors
 
-We thank all the amazing contributors who built **EcoLens** 🌱  
-
+We thank all the amazing contributors who built **EcoLens** 🌱
 
 - **Anannaya Agarwal**
 - **Ishita Sodhiya**
-- **Loheyta Dhanure** 
+- **Loheyta Dhanure**
 - **Prisha Birla**
-- **Sakshi Sangale** 
-
+- **Sakshi Sangale**
 
 <p align="center">
-  Made with ❤️ by Team EcoLens🌍🌱
+  Made with ❤️ by Team EcoLens 🌍🌱
 </p>
-
-
-
